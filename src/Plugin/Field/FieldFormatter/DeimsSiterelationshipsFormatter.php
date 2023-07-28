@@ -50,7 +50,7 @@ class DeimsSiterelationshipsFormatter extends FormatterBase {
 		}
 		
 		if ($relationship_label) {
-			$relationship_type_string = "This site " $relationship_label . ":<br>";
+			$relationship_type_string = "This site " . $relationship_label . ":<br>";
 		}
 		else {
 			break;
