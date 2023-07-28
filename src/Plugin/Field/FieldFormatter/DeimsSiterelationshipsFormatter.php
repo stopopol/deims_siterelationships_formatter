@@ -41,19 +41,36 @@ class DeimsSiterelationshipsFormatter extends FormatterBase {
 	foreach ($items as $delta => $item) {
 
 	  if ($item->entity) {
+		
 		$relationship_type = $item->entity->field_relationship_type;
 		$related_sites = $item->entity->field_related_sites;
 		
-		$relationship_element = serialize($related_sites);
+		foreach ($relationship_type as $term) {
+			$relationship_label = $term->entity->label();
+		}
 		
-		//$RefEntity_item['title'] = $RefEntity->get('title')->value;
-		//$RefEntity_item['id']['prefix'] = 'https://deims.org/';
-		//$RefEntity_item['id']['suffix'] = $RefEntity->field_deims_id->value;
+		if ($relationship_label) {
+			$relationship_type_string = "This site " $relationship_label . ":<br>";
+		}
+		else {
+			break;
+		}
+		
+		$ul_string = "";
+		foreach ($related_sites as $delta => $site) {
+			$ul_string = $ul_string . '<li><a href="' . "/" . $site->entity->field_deims_id->value . '">' . $site->entity->get('title')->value . '</a></li>';
+		}
+
+		if ($ul_string == "") {
+			break;
+		}
+		
+		$relationship_element = $relationship_type_string . "<ul>". $ul_string . "</ul>";
 		
 	  }
 	  else {
 		break;
-	  }  
+	  }
 	  
 	  $element[$delta] = [
 		'#markup' => $relationship_element,
@@ -65,5 +82,3 @@ class DeimsSiterelationshipsFormatter extends FormatterBase {
   }
 	
 }
-
-
