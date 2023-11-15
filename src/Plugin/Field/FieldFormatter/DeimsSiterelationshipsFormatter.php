@@ -41,7 +41,8 @@ class DeimsSiterelationshipsFormatter extends FormatterBase {
 	foreach ($items as $delta => $item) {
 
 	  if ($item->entity) {
-		
+
+		$relationship_label = null;
 		$relationship_type = $item->entity->field_relationship_type;
 		$related_sites = $item->entity->field_related_sites;
 		
