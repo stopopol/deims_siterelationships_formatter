@@ -59,7 +59,9 @@ class DeimsSiterelationshipsFormatter extends FormatterBase {
 		
 		$ul_string = "";
 		foreach ($related_sites as $delta => $site) {
-			$ul_string = $ul_string . '<li><a href="' . "/" . $site->entity->field_deims_id->value . '">' . $site->entity->get('title')->value . '</a></li>';
+			if ($site->entity) {
+				$ul_string = $ul_string . '<li><a href="' . "/" . $site->entity->field_deims_id->value . '">' . $site->entity->get('title')->value . '</a></li>';
+			}
 		}
 
 		if ($ul_string == "") {
