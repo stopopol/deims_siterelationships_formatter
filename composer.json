@@ -1,6 +1,6 @@
 {
     "name": "stopopol/deims_siterelationships_formatter",
     "description": "renders the site relationships paragraph on DEIMS-SDR",
-    "type": "drupal-custom-module",
+    "type": "drupal-module",
     "homepage": "https://github.com/stopopol/deims_siterelationships_formatter"
 }
