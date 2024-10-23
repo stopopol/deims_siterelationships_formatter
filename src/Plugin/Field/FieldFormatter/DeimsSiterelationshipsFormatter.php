@@ -40,48 +40,49 @@ class DeimsSiterelationshipsFormatter extends FormatterBase {
 
 	foreach ($items as $delta => $item) {
 
-	  if ($item->entity) {
+		if ($item->entity) {
 
-		$relationship_label = null;
-		$relationship_type = $item->entity->field_relationship_type;
-		$related_sites = $item->entity->field_related_sites;
-		
-		foreach ($relationship_type as $term) {
-			$relationship_label = $term->entity->label();
-		}
-		
-		if (!empty($relationship_label)) {
-			$relationship_type_string = "This site " . $relationship_label . ":<br>";
+			$relationship_label = null;
+			$relationship_type = $item->entity->field_relationship_type;
+			$related_sites = $item->entity->field_related_sites;
+			
+			foreach ($relationship_type as $term) {
+				$relationship_label = $term->entity->label();
+			}
+			
+			if (!empty($relationship_label)) {
+				$relationship_type_string = "This site " . $relationship_label . ":<br>";
+			}
+			else {
+				continue;
+			}
+			
+			$ul_string = "";
+			foreach ($related_sites as $delta => $site) {
+				if ($site->entity) {
+					$ul_string = $ul_string . '<li><a href="' . "/" . $site->entity->field_deims_id->value . '">' . $site->entity->get('title')->value . '</a></li>';
+				}
+			}
+
+			if ($ul_string == "") {
+				continue;
+			}
+			
+			$relationship_element = $relationship_type_string . "<ul>". $ul_string . "</ul>";
+
+			$element[] = [
+				'#markup' => $relationship_element,
+			];
+			
 		}
 		else {
 			break;
 		}
-		
-		$ul_string = "";
-		foreach ($related_sites as $delta => $site) {
-			if ($site->entity) {
-				$ul_string = $ul_string . '<li><a href="' . "/" . $site->entity->field_deims_id->value . '">' . $site->entity->get('title')->value . '</a></li>';
-			}
-		}
-
-		if ($ul_string == "") {
-			break;
-		}
-		
-		$relationship_element = $relationship_type_string . "<ul>". $ul_string . "</ul>";
-		
-	  }
-	  else {
-		break;
-	  }
-	  
-	  $element[$delta] = [
-		'#markup' => $relationship_element,
-	  ];
-	  
+		 	  
 	} 
 
 	return $element;
+	
   }
 	
 }
